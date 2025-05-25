@@ -8,20 +8,15 @@ create Table rangers(
 
 );
 
-ALTER TABLE rangers ADD COLUMN Derek Fox ,Coastal Plains TEXT;
 SELECT * FROM rangers;
-DROP Table rangers;
+
 
 INSERT INTO rangers (ranger_id,name,region)
 VALUES
 (1, 'Alice Green', 'Northern Hills'),
 (2, 'Bob White', 'River Delta'),
-(3, 'Carol King', 'Mountain Range'),
-(4, 'David Smith', 'Eastern Wetlands'),
-(5, 'Emma Johnson', 'Central Forest'),
-(6, 'Frank Brown', 'Southern Plains'),
-(7, 'Grace Lee', 'Western Grasslands'),
-(8, 'Henry Adams', 'Coastal Dunes')
+(3, 'Carol King', 'Mountain Range');
+
 
 
 CREATE TABLE species (
@@ -37,16 +32,12 @@ VALUES
 (1, 'Snow Leopard', 'Panthera uncia', '1775-01-01', 'Endangered'),
 (2, 'Bengal Tiger', 'Panthera tigris tigris', '1758-01-01', 'Endangered'),
 (3, 'Red Panda', 'Ailurus fulgens', '1825-01-01', 'Vulnerable'),
-(4, 'Asiatic Elephant', 'Elephas maximus indicus', '1758-01-01', 'Endangered'),
-(5, 'Indian Pangolin', 'Manis crassicaudata', '1822-01-01', 'Endangered'),
-(6, 'Himalayan Monal', 'Lophophorus impejanus', '1790-01-01', 'Least Concern'),
-(7, 'Indian Rhinoceros', 'Rhinoceros unicornis', '1758-01-01', 'Vulnerable'),
-(8, 'Blackbuck', 'Antilope cervicapra', '1823-01-01', 'Near Threatened');
+(4, 'Asiatic Elephant', 'Elephas maximus indicus', '1758-01-01', 'Endangered');
 
 
 
 SELECT * FROM species;
-DROP TABLE species;
+
 
 CREATE TABLE sightings (
     sighting_id SERIAL PRIMARY KEY,
@@ -64,33 +55,65 @@ INSERT INTO sightings (ranger_id, species_id, sighting_time, location, notes) VA
 (1, 1, '2024-05-10 07:45:00', 'Peak Ridge', 'Camera trap image captured'),
 (2, 2, '2024-05-12 16:20:00', 'Bankwood Area', 'Juvenile seen'),
 (3, 3, '2024-05-15 09:10:00', 'Bamboo Grove East', 'Feeding observed'),
-(2, 1, '2024-05-18 18:30:00', 'Snowfall Pass', NULL),
-(1, 3, '2024-06-01 12:15:00', 'Highland Trail', 'Nest spotted'),
-(3, 2, '2024-06-03 14:40:00', 'Riverbank Edge', 'Tracks seen'),
-(1, 4, '2024-06-07 08:00:00', 'Forest Clearing', 'Herd movement observed'),
-(2, 4, '2024-06-10 17:30:00', 'Eastern Wetlands', 'Young calf seen');
+(2, 1, '2024-05-18 18:30:00', 'Snowfall Pass', NULL)
+
 
 
 SELECT * FROM sightings;
 
-DROP Table sightings;
 
 
 -- 1 problem 
 
-INSERT INTO rangers (name, region)
-VALUES ('Derek Fox', 'Coastal Plains');
 
 
-INSERT INTO rangers (name, region)
-VALUES ('Derek Fox', 'Coastal Plains');
-
--- problem 3 
-SELECT * FROM sightings WHERE location  ILIKE '%pass%';
-SELECT * FROM sightings;
+-- problem 2
+SELECT * FROM sightings 
+WHERE location  ILIKE '%pass%';
 
 
-SELECT r.name, COUNT(s.sighting_id) AS total_sightings
-FROM rangers r
-LEFT JOIN sightings s ON r.ranger_id = s.ranger_id
-GROUP BY r.name;
+
+
+-- problem 3
+SELECT COUNT(DISTINCT species_id) AS unique_species_count FROM sightings;
+
+
+--  problem 4
+
+SELECT r.name, COUNT(s.sighting_id) AS total_sightings FROM rangers r
+JOIN sightings s ON r.ranger_id = s.ranger_id GROUP BY r.name ORDER BY r.name;
+
+
+
+--  problem 5
+
+SELECT s.common_name FROM species s LEFT JOIN sightings si ON s.species_id = si.species_id
+WHERE si.species_id IS NULL;
+
+--  problem 6 
+
+SELECT sp.common_name, si.sighting_time, r.name FROM sightings si
+JOIN species sp ON si.species_id = sp.species_id JOIN rangers r ON si.ranger_id = r.ranger_id
+ORDER BY si.sighting_time DESC LIMIT 2;
+
+--  problem 7
+
+UPDATE species SET conservation_status = 'Historic'
+WHERE discovery_date < '1800-01-01';
+
+--  problem 8
+
+SELECT sighting_id,
+       CASE
+           WHEN EXTRACT(HOUR FROM sighting_time) < 12 THEN 'Morning'
+           WHEN EXTRACT(HOUR FROM sighting_time) < 17 THEN 'Afternoon'
+           ELSE 'Evening'
+       END AS time_of_day
+FROM sightings;
+
+--  problem 9
+
+DELETE FROM rangers
+WHERE ranger_id NOT IN (SELECT DISTINCT ranger_id FROM sightings);
+
+
