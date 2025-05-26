@@ -64,7 +64,9 @@ SELECT * FROM sightings;
 
 
 -- 1 problem 
-
+INSERT INTO rangers (name,region)
+VALUES
+    ('Coastal Plains','Coastal Plains');
 
 
 -- problem 2
