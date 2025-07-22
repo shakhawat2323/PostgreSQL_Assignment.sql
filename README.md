@@ -1,32 +1,27 @@
-## What is PostgreSQL?
-
-- PostgreSQL is an open source relational database system
-- It stores data in tables (rows & columns) and supports complex queries.
-- Free to use and highly reliable.
-
----
-
-## What is the purpose of a database schema in PostgreSQL?
-
-- A **schema** is like a container or namespace for tables, views, and other objects.
-- It helps organize database objects and prevent name conflicts.
+## PostgreSQL কী?
+- PostgreSQL একটি ওপেন সোর্স রিলেশনাল ডেটাবেইস সিস্টেম।
+- এটি টেবিল (সারি ও কলাম) আকারে ডেটা সংরক্ষণ করে এবং জটিল কোয়েরি সমর্থন করে।
+- এটি ব্যবহারে ফ্রি এবং অত্যন্ত নির্ভরযোগ্য।
 
 ---
 
-## Primary Key and Foreign Key Concepts
-
-- Primary Key:Uniquely identifies each row in a table (e.g., `id` column).
-- Foreign Key: Links rows in one table to rows in another, ensuring referential integrity.
-
----
-
-## Difference: VARCHAR vs CHAR
-
-- VARCHAR: Variable length string saves space if text length varies.
-- CHAR:\*\* Fixed length string pads with spaces if needed.
+## PostgreSQL-এ একটি ডেটাবেইস স্কিমার উদ্দেশ্য কী?
+- একটি স্কিমা হল টেবিল, ভিউ এবং অন্যান্য অবজেক্টগুলোর জন্য একটি কনটেইনার বা নেমস্পেসের মতো।
+- এটি ডেটাবেইস অবজেক্টগুলোকে সংগঠিত করতে এবং নামের দ্বন্দ্ব এড়াতে সাহায্য করে।
 
 ---
 
-## Purpose of the WHERE Clause
+## প্রাইমারি কি এবং ফরেইন কি ধারণা
+- প্রাইমারি কি: প্রতিটি সারিকে অনন্যভাবে শনাক্ত করে (যেমনঃ `id` কলাম)।
+- ফরেইন কি: এক টেবিলের সারিগুলোকে আরেক টেবিলের সারির সঙ্গে যুক্ত করে, রেফারেন্সিয়াল ইন্টিগ্রিটি নিশ্চিত করে।
 
-- The **WHERE clause** filters rows in a SELECT statement based on specific conditions.
+---
+
+## পার্থক্য: VARCHAR বনাম CHAR
+- VARCHAR: পরিবর্তনশীল দৈর্ঘ্যের স্ট্রিং, টেক্সটের দৈর্ঘ্য ভিন্ন হলে জায়গা সাশ্রয় হয়।
+- CHAR: নির্দিষ্ট দৈর্ঘ্যের স্ট্রিং, প্রয়োজনে ফাঁকা স্থান দিয়ে পূরণ করা হয়।
+
+---
+
+## WHERE ক্লজের উদ্দেশ্য
+- WHERE ক্লজ ব্যবহার করে SELECT স্টেটমেন্টে নির্দিষ্ট শর্ত অনুযায়ী সারি ফিল্টার করা যায়।
